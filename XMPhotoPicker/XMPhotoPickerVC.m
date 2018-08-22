@@ -16,7 +16,8 @@
 
 
 -(instancetype)init {
-    if(self = [super initWithRootViewController:[XMPhotoPickerListViewController new]]) {
+     XMPhotoPickerListViewController * vc = [[XMPhotoPickerListViewController alloc] initWithNibName:@"XMPhotoPickerListViewController" bundle:[NSBundle bundleForClass:[self class]]];
+    if(self = [super initWithRootViewController:vc]) {
         XMPhotoPickerListViewController * pickVC =  (XMPhotoPickerListViewController *)self.childViewControllers.firstObject;
         __weak typeof(self)weakSelef = self;
         [pickVC setOkbuttonClick:^(NSArray<UIImage *> *imageArray) {

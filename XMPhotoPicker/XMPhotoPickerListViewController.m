@@ -37,7 +37,7 @@
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
-        [_collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([PhotoListItem class]) bundle:nil] forCellWithReuseIdentifier:@"Cell"];
+       [_collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([PhotoListItem class]) bundle:[NSBundle bundleForClass:[self class]]] forCellWithReuseIdentifier:@"Cell"];;
     }
     return _collectionView;
 }
