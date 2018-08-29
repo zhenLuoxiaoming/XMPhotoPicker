@@ -11,6 +11,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "AFNetworking.h"
 /*! 定义请求成功的block */
 typedef void( ^ XMResponseSuccess)(id responseObject);
 /*! 定义请求失败的block */

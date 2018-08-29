@@ -11,6 +11,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "AFNetworking.h"
 typedef enum {
     NONet,    // 没有网络
     WiFiNet,  // wifi

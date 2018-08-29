@@ -7,7 +7,7 @@
 //
 
 #import "SGNetStatusManager.h"
-#import "AFNetworking.h"
+
 
 @implementation SGNetStatusManager
 +(instancetype)shareInstance {

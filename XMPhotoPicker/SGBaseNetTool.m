@@ -7,6 +7,7 @@
 //
 
 #import "SGBaseNetTool.h"
+
 static NSMutableArray *tasks;
 
 @implementation SGBaseNetTool
@@ -57,13 +58,13 @@ static NSMutableArray *tasks;
     }
     /*! 检查地址中是否有中文 */
     NSString * URLString = [NSURL URLWithString:urlString] ? urlString : [self strUTF8Encoding:urlString];
-    
+
     NSURLSessionTask *sessionTask = nil;
-    
+
     sessionTask = [[self shareAFManager] GET:URLString parameters:params  progress:^(NSProgress * _Nonnull downloadProgress) {
-        
+
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+
         NSData *data = responseObject;
         NSDictionary *responseObjectDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         if (success)
@@ -72,23 +73,23 @@ static NSMutableArray *tasks;
         }else{
             fail(responseObjectDict);
         }
-        
+
         [[self tasks] removeObject:sessionTask];
-        
+
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (fail)
         {
             fail(error);
         }
         [[self tasks] removeObject:sessionTask];
-        
+
     }];
-    
+
     if (sessionTask)
     {
         [[self tasks] addObject:sessionTask];
     }
-    
+
     return sessionTask;
 }
 
@@ -106,9 +107,9 @@ static NSMutableArray *tasks;
     NSString *URLString = [NSURL URLWithString:url] ? url : [self strUTF8Encoding:url];
     NSURLSessionTask *sessionTask = nil;
     sessionTask = [[self shareAFManager] POST:URLString parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
-        
+
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+
         NSData *data = responseObject;
         NSDictionary *responseObjectDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         if (success)
@@ -116,15 +117,15 @@ static NSMutableArray *tasks;
             success(responseObjectDict);
         }
         [[self tasks] removeObject:sessionTask];
-        
+
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
+
         if (fail)
         {
             fail(error);
         }
         [[self tasks] removeObject:sessionTask];
-        
+
     }];
     if (sessionTask)
     {
@@ -141,7 +142,7 @@ static NSMutableArray *tasks;
     /*! 检查地址中是否有中文 */
     NSString *URLString = [NSURL URLWithString:url] ? url : [self strUTF8Encoding:url];
     NSURLSessionTask *sessionTask = nil;
-    sessionTask = [[self shareAFManager] PUT:URLString parameters:params headers:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    sessionTask = [[self shareAFManager] PUT:URLString parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSData *data = responseObject;
         NSDictionary *responseObjectDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         if (success)
@@ -156,7 +157,6 @@ static NSMutableArray *tasks;
         }
         [[self tasks] removeObject:sessionTask];
     }];
-    
     if (sessionTask)
     {
         [[self tasks] addObject:sessionTask];
@@ -182,7 +182,7 @@ static NSMutableArray *tasks;
             return nil;
         }
     }
-    
+
     NSURLSessionTask *task = [[self shareAFManager] POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         int i = 0;
         //根据当前系统时间生成图片名称
@@ -190,7 +190,7 @@ static NSMutableArray *tasks;
         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
         [formatter setDateFormat:@"yyyyMMddHHmmss"];
         NSString *dateString = [formatter stringFromDate:date];
-        
+
         for (UIImage *image in images) {
             i++;
             NSString *fileName = [NSString stringWithFormat:@"%@%d.png",dateString,i];
@@ -206,7 +206,7 @@ static NSMutableArray *tasks;
         uploadProgressBlock(uploadProgress.fractionCompleted,1,1);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         succeedBlock(task,responseObject);
-        
+
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         failedBlock(task,error);
     }];
